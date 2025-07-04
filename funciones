@@ -1,0 +1,171 @@
+#include<iostream>
+#include"funciones.h"
+#include<ctime>
+using namespace std;
+
+int mostrarOpciones()
+{
+    int opcion;
+
+cout<<"------JUEGO DE ESCALERA------"<<endl;
+cout<<"1. JUEGO NUEVO PARA UN JUGADOR"<<endl;
+cout<<"2. PUNTUACION MAS ALTA"<<endl;
+cout<<"0. SALIR"<<endl;
+cout<<"-----------------------------"<<endl;
+cout<<"INGRESE UNA OPCION: "<<endl;
+cin>> opcion;
+cout<<"-----------------------------"<<endl;
+cout<<endl<<endl;
+
+return opcion;
+}
+
+
+
+void juegoUnJugador( string &nombre,int &puntaje,int &rondas){
+
+    rondas = 1;
+    puntaje = 0;
+    const int objetivo = 100;
+    bool gameOver = false;
+
+    cout<<"INGRESE SU NOMBRE: "<<endl;
+    cin>>nombre;
+    cin.get();
+
+    while (!gameOver && puntaje < objetivo) {
+
+        cout<<"----------------------------"<<endl;
+        cout<< "RONDA:" << rondas <<" " << "JUGADOR: " << nombre << endl;
+        cout<< "PUNTAJE ACTUAL:"<< puntaje << " "<<"PUNTOS" << endl;
+        cout<<"----------------------------"<<endl<<endl;
+
+        int vLanzamientos [3];
+
+        for( int lanzamiento = 0 ; lanzamiento < 3; lanzamiento++){
+            int vDados[6];
+            int sumaD = 0;
+            int puntos=0;
+            cout<< "LANZAMIENTO:"<< lanzamiento+1 << " : ";
+
+
+
+            for (int i = 0; i < 6; i++){
+                vDados[i] = rand() % 6 + 1;
+                cout<< vDados[i] <<" ";
+                sumaD += vDados[i];
+
+
+            }
+            cout<<endl;
+
+            cout << "PUNTAJE DEL LANZAMIENTO: " << sumaD << " puntos" << endl;
+            cout << endl;
+
+              bool esSexteto = true;
+            for (int i = 1; i < 6; i++) {
+                if (vDados[i] != vDados[0]) {
+                    esSexteto = false;
+                    break;
+                }
+            }
+            int caras[6] = {0};
+            for (int i = 0; i < 6; i++) {
+                caras[vDados[i] - 1]++;
+            }
+            bool esEscalera = true;
+            for (int i = 0; i < 6; i++) {
+                if (caras[i] != 1) {
+                    esEscalera = false;
+                    break;
+                }
+            }
+
+            if (esSexteto && vDados[0] == 6) {
+                cout << "TODOS LOS DADOS SON 6! NUEVO PUNTAJE 0." << endl;
+                puntaje = 0;
+                break;
+            } else if (esEscalera) {
+                cout<<endl;
+                cout << "ESCALERA! GANASTE!" << endl;
+
+                system("pause");
+                gameOver = true;
+                break;
+            } else if (esSexteto) {
+                puntos = vDados[0] * 10;
+                cout << "SEXTETO DE " << vDados[0] << " PUNTAJE: " << puntos << endl;
+            }else{
+
+                puntos = sumaD;
+
+            }
+
+                vLanzamientos[lanzamiento] = puntos;
+
+
+            cout<<"--------------------------"<<endl;
+            cout<<"Presione ENTER para lanzar"<<endl;
+
+            cin.get();
+
+        }
+        int puntuacionMayorDeRonda = vLanzamientos[0];
+        for (int i = 1; i < 3; i++){
+            if(vLanzamientos[i]>puntuacionMayorDeRonda){
+                puntuacionMayorDeRonda = vLanzamientos[i];
+            }
+        }
+        puntaje+= puntuacionMayorDeRonda;
+        if(puntaje>= objetivo){
+         cout<<endl;
+         cout<<"------------------------------"<<endl<<endl;
+         cout<<"FELICITACIONES GANASTE!!"<<nombre<<endl<<endl;
+         cout<<"PUNTAJE TOTAL: "<<puntaje<<endl<<endl;
+         cout<<"CANTIDADD DE RONDAS: "<<rondas<<endl;
+         cout<<"------------------------------"<<endl<<endl;
+
+         gameOver = true;
+        }
+        if (!gameOver){
+            cout<<"---------------------------"<<endl;
+            cout<<"FIN DE LA RONDA " << rondas<<endl;
+            cout << "PUNTAJE TOTAL: " << puntaje << " PUNTOS" << endl<<endl;
+            cout<<"---------------------------"<<endl;
+
+            cin.get();
+
+        rondas++;
+        }
+
+
+         system("pause");
+        }
+
+    }
+
+void puntajeMaximo(string nombre, int puntaje, int rondas) {
+    cout << "----------------------------" << endl;
+    cout << "PUNTAJE MAXIMO" << endl;
+
+
+
+    cout << "JUGADOR: "<<nombre<< endl;
+    cout << "PUNTAJE: "<<puntaje<< endl;
+    cout << "RONDAS: " <<rondas<< endl<<endl;
+
+    system("pause");
+    }
+
+    void juegoSimulado(){
+    }
+
+
+
+
+
+
+
+
+
+
